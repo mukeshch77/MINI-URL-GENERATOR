@@ -1,6 +1,8 @@
-import axiosInstance from "../utils/axiosInstance"
+import axios from "axios";
 
-export const createShortUrl = async (url,slug) =>{
-    const {data} = await axiosInstance.post("/api/create",{url,slug})
-    return data.shortUrl
-}
+const axiosInstance = axios.create({
+  baseURL: "https://mini-url-generator.onrender.com",
+  withCredentials: true,
+});
+
+export default axiosInstance;

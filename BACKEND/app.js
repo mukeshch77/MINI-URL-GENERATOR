@@ -39,6 +39,11 @@ app.get("/:id",redirectFromShortUrl)
 
 app.use(errorHandler)
 
+// Root route to verify Render is working
+app.get("/", (req, res) => {
+  res.send("🚀 Mini URL Generator Backend is Live!");
+});
+
 // Use Render's dynamic port
 const PORT = process.env.PORT || 5000;
 
