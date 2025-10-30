@@ -35,14 +35,16 @@ app.use(attachUser)
 app.use("/api/user",user_routes)
 app.use("/api/auth",auth_routes)
 app.use("/api/create",short_url)
-app.get("/:id",redirectFromShortUrl)
-
-app.use(errorHandler)
 
 // Root route to verify Render is working
 app.get("/", (req, res) => {
   res.send("🚀 Mini URL Generator Backend is Live!");
 });
+
+app.get("/:id",redirectFromShortUrl)
+
+app.use(errorHandler)
+
 
 // Use Render's dynamic port
 const PORT = process.env.PORT || 5000;
