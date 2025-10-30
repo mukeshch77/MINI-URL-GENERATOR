@@ -15,10 +15,16 @@ dotenv.config("./.env")
 
 const app = express();  
 
-app.use(cors({
-    origin: 'http://localhost:5173', // your React app
-    credentials: true // 👈 this allows cookies to be sent
-}));
+// Allow both local and production frontend origins
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",           // local React app
+      "https://mini-url-generator.onrender.com" // deployed frontend (if any)
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -33,9 +39,13 @@ app.get("/:id",redirectFromShortUrl)
 
 app.use(errorHandler)
 
-app.listen(3000,()=>{
-    connectDB()
-    console.log("Server is running on http://localhost:3000");
-})
+// Use Render's dynamic port
+const PORT = process.env.PORT || 3000;
 
+// Connect DB before starting server
+connectDB();
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Server is running on port ${PORT}`);
+});
 // GET - Redirection 
